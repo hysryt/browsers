@@ -29,6 +29,12 @@ jobs:
     - run: npm install
     - run: npm run update
     - run: npm run build:ejs
+    - name: Diff
+      id: diff
+      run: |
+        git add -N .
+        git diff --name-only --exit-code
+      continue-on-error: true
     - name: Commit
       run: |
         set -x
@@ -37,3 +43,4 @@ jobs:
         git add .
         git commit
         git push
+      if: steps.diff.outcome == 'failure'
