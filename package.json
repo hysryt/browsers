@@ -7,7 +7,7 @@
     "update:caniuse": "npm uninstall -s caniuse-db;npm install -s -D caniuse-db",
     "update:data": "node create-data.js > _data/data.json",
     "update": "npm run update:caniuse; npm run update:data",
-    "build:ejs": "eleventy; prettier _site/*.html --write"
+    "build:ejs": "eleventy --output=docs; prettier docs/*.html --write"
   },
   "type": "module",
   "keywords": [],
