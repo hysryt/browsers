@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ブラウザ一覧</title>
+	<link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+	<main>
+		<p class="updated">
+			更新日：<%- data.updated %><br>
+			シェア計測：<%- data.usage_date %>
+		</p>
+		<% Object.keys(data.browsers).forEach(key => { %>
+			<section>
+				<h2 class="title" id="<%- key %>"><%- data.browsers[key].name %></h2>
+				<table>
+					<thead>
+						<tr>
+							<th>ver.</th>
+							<th>リリース日</th>
+							<th>日本でのシェア</th>
+							<th>現行</th>
+						</tr>
+					</thead>
+					<tbody>
+						<% data.browsers[key].versions.forEach(version => { %>
+							<%
+								let className = '';
+								const isCurrentVersion = version.version == data.browsers[key].current_version;
+								if ( !isCurrentVersion && ( version.usage_in_jp === null || version.usage_in_jp < 0.25 ) ) {
+									className = 'not-used';
+								}
+							%>
+							<tr class="<%- className %>">
+								<td><%- version.version %></td>
+								<% if ( version.release_date !== null ) { %>
+									<td><%- version.release_date %></td>
+								<% } else { %>
+									<td>-</td>
+								<% } %>
+								<% if ( version.usage_in_jp !== null ) { %>
+									<td class="align-right <%- className %>"><%- version.usage_in_jp %>%</td>
+								<% } else { %>
+									<td class="align-right not-used">-</td>
+								<% } %>
+								<% if ( isCurrentVersion ) { %>
+									<td class="align-center">★</td>
+								<% } else { %>
+									<td></td>
+								<% } %>
+							</tr>
+						<% }); %>
+					</tbody>
+				</table>
+			</section>
+		<% }); %>
+	</main>
+	<footer>
+		出典：<a href="https://caniuse.com" target="_blank" rel="noopener">caniuse.com</a>
+	</footer>
+</body>
+</html>
