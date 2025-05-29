@@ -15,7 +15,7 @@
   "license": "ISC",
   "devDependencies": {
     "@11ty/eleventy": "^1.0.1",
-    "caniuse-db": "^1.0.30001718",
+    "caniuse-db": "^1.0.30001720",
     "dateformat": "^5.0.3",
     "prettier": "^2.6.2"
   }
